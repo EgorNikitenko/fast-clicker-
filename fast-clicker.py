@@ -3,7 +3,7 @@ import random
 pygame.init()
 
 window = pygame.display.set_mode(500,500)
-window.fill((154, 163, 172))
+window.fill((153, 163, 173))
 
 clock = pygame.time.Clock()
 
