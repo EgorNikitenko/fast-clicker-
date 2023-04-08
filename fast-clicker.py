@@ -3,7 +3,7 @@ import random
 pygame.init()
 
 window = pygame.display.set_mode(500,500)
-window.fill((153, 163, 173))
+window.fill((154, 163, 172))
 
 clock = pygame.time.Clock()
 
@@ -34,29 +34,31 @@ class Label(Area):
 cards = []
 num_cards = 4 
 x = 70 
+
 for i in range(num_cards): 
     new_card = Label(x, 170, 70, 100, (255, 255, 255))
     new_card.set_text('Click', 30)
     cards.append(new_card)
     x += 100
 
-timer_text = Label(0, 0, 50, 50, (0,0,0,0))
+timer_text = Label(0, 0, 50, 50, (154, 163, 172))
 timer_text.set_text('Час:', 40)
 timer_text.draw(20, 20)
 
-timer_count = Label(50, 55, 50, 50, (0,0,0,0))
+timer_count = Label(50, 55, 50, 50, (154, 163, 172))
 timer_count.set_text('0', 40)
 timer_count.draw(0, 0)
 
-score_text = Label(380, 0, 50, 50, (0,0,0,0))
+score_text = Label(380, 0, 50, 50, (154, 163, 172))
 score_text.set_text('Рахунок:', 40)
 score_text.draw(20, 20)
 
-score_count = Label(430, 55, 50, 50, (0,0,0,0))
+score_count = Label(430, 55, 50, 50, (154, 163, 172))
 score_count.set_text('0', 40)
 score_count.draw(0, 0)
 
 score = 0
+
 import time 
 start_time = time.time()
 cur_time = start_time
@@ -67,11 +69,12 @@ game = True
 while game:
     new_time = time.time()
     if new_time-cur_time >= 1: 
-        timer_count.set_text(str(new_time), 40)
+        timer_count.set_text(str(int(new_time - start_time)), 40)
         timer_count.draw()
         cur_time = new_time
-        pygame.display.update
-    if wait == 0:
+        pygame.display.update()
+
+
         number = random.randint(0,3)
         for i in range (num_cards):
             cards[i].set_color((255, 255, 255))
@@ -98,6 +101,18 @@ while game:
                     score_count.set_text(str(score), 40)
                     score_count.draw(0 ,0)
                     pygame.display.update()
+
+    if score >= 8:
+        finish = Label(0, 0, 500, 500, (153, 255, 204))
+        finish.set_text('You WIN', 70)
+        finish.draw(150,170)
+        game = False
+
+    if new_time-start_time >=10:
+        finish = Label(0, 0, 500, 500, (255, 153, 102))
+        finish.set_text('You LOSE', 70)
+        finish.draw(150,170)
+        game = False
 
     clock.tick(40)
     pygame.display.update()
